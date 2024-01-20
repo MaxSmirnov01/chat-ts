@@ -1,18 +1,21 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { toast } from 'react-toastify';
-import Channels from './Channels.jsx';
-import Messages from './Messages.jsx';
-import getModal from '../modals.js';
-import getData from '../api/getData.js';
-import useLocalStorage from '../hooks/useLocalStorage.jsx';
-import useAuth from '../hooks/useAuth.jsx';
-import socket from '../socket.js';
+// import Channels from '../Channels.jsx';
+// import Messages from '../Messages.jsx';
+import getModal from '../../modals.js';
+import getData from '../../api/getData.js';
+import useLocalStorage from '../../hooks/useLocalStorage.jsx';
+import useAuth from '../../hooks/useAuth.jsx';
+import socket from '../../socket.js';
 import {
-  addChannel, removeChannel, renameChannel, setCurrentChannel, defaultChannel,
-} from '../slices/channelsSlice.js';
-import { addMessage } from '../slices/messagesSlice.js';
+  addChannel,
+  removeChannel,
+  renameChannel,
+  setCurrentChannel,
+  defaultChannel,
+} from '../../slices/channelsSlice.js';
+import { addMessage } from '../../slices/messagesSlice.js';
 
 const MainPage = () => {
   const dispatch = useDispatch();
@@ -56,24 +59,14 @@ const MainPage = () => {
   }, [dispatch, username, currentChannelId]);
 
   useEffect(() => {
-    try {
-      dispatch(getData(token));
-    } catch (error) {
-      if (error.response.status === 401) {
-        logOut();
-        return;
-      }
-      toast.error(`${t('PopUpAlerts.mainPage')}`, {
-        icon: '😿',
-      });
-    }
+    dispatch(getData(token, logOut, t));
   }, [dispatch, t, token, logOut]);
 
   return (
     <div className="container h-100 my-4 overflow-hidden rounded shadow">
       <div className="row h-100 bg-white flex-md-row">
-        <Channels />
-        <Messages />
+        {/* <Channels />
+        <Messages /> */}
       </div>
       {modalIsOpen && <Modal />}
     </div>

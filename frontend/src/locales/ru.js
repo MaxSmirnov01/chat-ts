@@ -21,7 +21,7 @@ const ru = {
       mainPage: 'на главную страницу',
     },
     Navbar: {
-      navBarBrand: 'Hexlet Chat',
+      navBarBrand: 'Chat',
       logOut: 'Выйти',
       en: 'English',
       ru: 'Русский',

@@ -1,16 +1,15 @@
-import React from 'react';
-import {
-  Navbar, Container, Button, Dropdown, DropdownButton,
-} from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { AppBar, Box, Button, Menu, MenuItem, Typography } from '@mui/material';
+import LanguageIcon from '@mui/icons-material/Language';
 import { useTranslation } from 'react-i18next';
-import routes from '../routes';
+import { Link } from 'react-router-dom';
+import routes from '../router/paths';
 import useAuth from '../hooks/useAuth';
 
-const NavbarComponent = () => {
+const Navbar = () => {
+  const [anchorEl, setAnchorEl] = useState(null);
   const auth = useAuth();
   const { t, i18n } = useTranslation();
-
   const handleAuthButton = () => {
     auth.logOut();
   };
@@ -18,26 +17,71 @@ const NavbarComponent = () => {
   const handleLangSwitch = (e) => {
     const lang = e.target.dataset.testid;
     i18n.changeLanguage(lang);
+    setAnchorEl(!anchorEl);
+  };
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(!anchorEl);
   };
 
   return (
-    <Navbar bg="white" className="shadow-sm">
-      <Container>
-        <Navbar.Brand as={Link} to={routes.mainPath()}>
-          {t('Navbar.navBarBrand')}
-        </Navbar.Brand>
-        <DropdownButton title={t('Navbar.lang')} id="bg-nested-dropdown" className="ml-auto" variant="link">
-          <Dropdown.Item onClick={handleLangSwitch} data-testid="ru">
+    <AppBar
+      position="static"
+      sx={{
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: '15px 20px',
+      }}
+    >
+      <Typography
+        variant="h4"
+        component={Link}
+        to={routes.mainPath()}
+        sx={{
+          color: 'inherit',
+          textDecoration: 'none',
+        }}
+      >
+        {t('Navbar.navBarBrand')}
+      </Typography>
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+        {/* <ThemeButton /> */}
+        <LanguageIcon
+          id="basic-button"
+          aria-controls={anchorEl ? 'basic-menu' : undefined}
+          aria-haspopup="true"
+          aria-expanded={anchorEl ? 'true' : undefined}
+          onClick={handleClick}
+        />
+        <Menu
+          id="basic-menu"
+          anchorEl={anchorEl}
+          open={!!anchorEl}
+          onClose={handleClose}
+          MenuListProps={{
+            'aria-labelledby': 'basic-button',
+          }}
+        >
+          <MenuItem onClick={handleLangSwitch} data-testid="ru">
             {t('Navbar.ru')}
-          </Dropdown.Item>
-          <Dropdown.Item onClick={handleLangSwitch} data-testid="en">
+          </MenuItem>
+          <MenuItem onClick={handleLangSwitch} data-testid="en">
             {t('Navbar.en')}
-          </Dropdown.Item>
-        </DropdownButton>
-        {auth.loggedIn && <Button onClick={handleAuthButton}>{t('Navbar.logOut')}</Button>}
-      </Container>
-    </Navbar>
+          </MenuItem>
+        </Menu>
+        {auth.loggedIn && (
+          <Button onClick={handleAuthButton} variant="outlined" color="inherit">
+            {t('Navbar.logOut')}
+          </Button>
+        )}
+      </Box>
+    </AppBar>
   );
 };
 
-export default NavbarComponent;
+export default Navbar;

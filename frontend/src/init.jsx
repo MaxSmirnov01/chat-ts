@@ -1,9 +1,9 @@
-/* eslint-disable implicit-arrow-linebreak */
 import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
 import i18next from 'i18next';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
 import { Provider } from 'react-redux';
-import leoProfanity from 'leo-profanity';
+import AuthProvider from './components/AuthProvider.jsx';
 import store from './slices/store.js';
 import App from './components/App';
 import resources from './locales/index.js';
@@ -20,10 +20,6 @@ const init = async () => {
       escapeValue: false,
     },
   });
-
-  const filter = leoProfanity;
-  filter.add(filter.getDictionary('ru'));
-  filter.add(filter.getDictionary('en'));
 
   const api = {
     sendMessage: (...arg) =>
@@ -51,7 +47,11 @@ const init = async () => {
     <Provider store={store}>
       <I18nextProvider i18n={i18n}>
         <SocketContext.Provider value={api}>
-          <App />
+          <BrowserRouter>
+            <AuthProvider>
+              <App />
+            </AuthProvider>
+          </BrowserRouter>
         </SocketContext.Provider>
       </I18nextProvider>
     </Provider>

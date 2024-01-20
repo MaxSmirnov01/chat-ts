@@ -21,7 +21,7 @@ const en = {
       mainPage: 'main page',
     },
     Navbar: {
-      navBarBrand: 'Hexlet Chat',
+      navBarBrand: 'Chat',
       logOut: 'Log Out',
       en: 'English',
       ru: 'Русский',
