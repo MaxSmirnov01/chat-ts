@@ -1,40 +1,64 @@
-// import React from 'react';
-// import { Button, ButtonGroup, Dropdown } from 'react-bootstrap';
-// import { useTranslation } from 'react-i18next';
+import React, { useState } from 'react';
+import { ListItemIcon, ListItemButton, ListItemText, Menu, MenuItem, Box, Typography } from '@mui/material';
+import StarPurple500RoundedIcon from '@mui/icons-material/StarPurple500Rounded';
+import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
+import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import { useTranslation } from 'react-i18next';
 
-// const NewChannels = (props) => {
-//   const {
-//     channel, currentChannelId, handleSelectChannel, handleRemoveChannel, handleRenameChannel,
-//   } = props;
-//   const { t } = useTranslation();
+const NewChannels = (props) => {
+  const { channel, currentChannelId, handleSelectChannel, handleRemoveChannel, handleRenameChannel } = props;
+  const { t } = useTranslation();
 
-//   return (
-//     <li key={channel.id} className="nav-item w-100">
-//       <Dropdown as={ButtonGroup} className="d-flex">
-//         <Button
-//           onClick={() => handleSelectChannel(channel.id)}
-//           type="button"
-//           className="w-100 rounded-0 text-start btn text-truncate"
-//           variant={currentChannelId === channel.id ? 'secondary' : null}
-//         >
-//           <span className="me-1">#</span>
-//           {channel.name}
-//         </Button>
-//         <Dropdown.Toggle
-//           split
-//           id="dropdown-split-basic"
-//           className="flex-grow-0"
-//           variant={currentChannelId === channel.id ? 'secondary' : null}
-//         >
-//           <span className="visually-hidden">{t('Channels.channelControl')}</span>
-//         </Dropdown.Toggle>
-//         <Dropdown.Menu>
-//           <Dropdown.Item onClick={() => handleRemoveChannel(channel.id)}>{t('Channels.removeChannel')}</Dropdown.Item>
-//           <Dropdown.Item onClick={() => handleRenameChannel(channel.id)}>{t('Channels.renameChannel')}</Dropdown.Item>
-//         </Dropdown.Menu>
-//       </Dropdown>
-//     </li>
-//   );
-// };
+  const [anchorEl, setAnchorEl] = useState(null);
 
-// export default NewChannels;
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(!anchorEl);
+  };
+
+  return (
+    <ListItemButton
+      key={channel.id}
+      onClick={() => handleSelectChannel(channel.id)}
+      selected={currentChannelId === channel.id}
+    >
+      <ListItemIcon sx={{ minWidth: '30px' }}>
+        <StarPurple500RoundedIcon color="warning" />
+      </ListItemIcon>
+      <ListItemText>
+        <Typography noWrap>{channel.name}</Typography>
+      </ListItemText>
+      <Box>
+        <KeyboardArrowDownRoundedIcon onClick={handleClick} sx={{ paddingTop: '5px' }} />
+        <Menu anchorEl={anchorEl} open={!!anchorEl} onClose={handleClose}>
+          <MenuItem
+            onClick={() => {
+              handleRemoveChannel(channel.id);
+              handleClose();
+            }}
+            sx={{ gap: '10px' }}
+          >
+            <DeleteOutlineRoundedIcon />
+            {t('Channels.removeChannel')}
+          </MenuItem>
+          <MenuItem
+            onClick={() => {
+              handleRenameChannel(channel.id);
+              handleClose();
+            }}
+            sx={{ gap: '10px' }}
+          >
+            <EditOutlinedIcon />
+            {t('Channels.renameChannel')}
+          </MenuItem>
+        </Menu>
+      </Box>
+    </ListItemButton>
+  );
+};
+
+export default NewChannels;

@@ -82,7 +82,6 @@ const ru = {
       },
     },
     PopUpAlerts: {
-      mainPage: 'Сервер не отвечает',
       modal: {
         addChannel: 'Канал создан',
         removeChannel: 'Канал удалён',

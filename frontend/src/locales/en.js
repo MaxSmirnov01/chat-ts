@@ -80,7 +80,6 @@ const en = {
       },
     },
     PopUpAlerts: {
-      mainPage: 'The server is not responding',
       modal: {
         addChannel: 'Channel created',
         removeChannel: 'Channel removed',

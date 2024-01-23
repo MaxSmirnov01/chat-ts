@@ -55,7 +55,7 @@ const AuthorizationForm = () => {
   });
 
   return (
-    <Box component="main" sx={{ height: '100vh' }}>
+    <Box sx={{ height: '100vh' }}>
       <Box component="section" sx={{ display: 'flex', justifyContent: 'center', padding: '50px 0' }}>
         <Container
           maxWidth="sm"
@@ -65,7 +65,7 @@ const AuthorizationForm = () => {
             display: 'flex',
             flexDirection: 'column',
             border: '1px solid #ccc',
-            boxShadow: '0.2rem 0.2rem 0.5rem rgba(0, 0, 0, 0.2)',
+            boxShadow: '0 0.5rem 1.5rem rgba(0,0,0,0.2)',
             borderRadius: '5px',
             padding: '20px',
             margin: '30px',

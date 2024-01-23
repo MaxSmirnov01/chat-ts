@@ -1,9 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { toast } from 'react-toastify';
 import requests from '../requests.js';
 
-const getData = createAsyncThunk('getData', async (token, logOut, t) => {
+const getData = createAsyncThunk('getData', async ({ token, logOut }) => {
   try {
     const response = await axios.get(requests.getData(), {
       headers: {
@@ -14,9 +13,6 @@ const getData = createAsyncThunk('getData', async (token, logOut, t) => {
   } catch (error) {
     if (error.response.status === 401) {
       logOut();
-      toast.error(`${t('PopUpAlerts.mainPage')}`, {
-        icon: '😿',
-      });
     }
     throw Error(error);
   }

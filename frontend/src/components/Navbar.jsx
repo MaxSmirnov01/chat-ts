@@ -10,6 +10,7 @@ const Navbar = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const auth = useAuth();
   const { t, i18n } = useTranslation();
+
   const handleAuthButton = () => {
     auth.logOut();
   };
@@ -51,13 +52,15 @@ const Navbar = () => {
       </Typography>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
         {/* <ThemeButton /> */}
-        <LanguageIcon
-          id="basic-button"
-          aria-controls={anchorEl ? 'basic-menu' : undefined}
-          aria-haspopup="true"
-          aria-expanded={anchorEl ? 'true' : undefined}
-          onClick={handleClick}
-        />
+        <MenuItem>
+          <LanguageIcon
+            id="basic-button"
+            aria-controls={anchorEl ? 'basic-menu' : undefined}
+            aria-haspopup="true"
+            aria-expanded={anchorEl ? 'true' : undefined}
+            onClick={handleClick}
+          />
+        </MenuItem>
         <Menu
           id="basic-menu"
           anchorEl={anchorEl}

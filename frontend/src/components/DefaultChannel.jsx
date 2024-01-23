@@ -1,22 +1,21 @@
-// import React from 'react';
-// import { Button } from 'react-bootstrap';
+import React from 'react';
+import { ListItemIcon, ListItemButton, ListItemText, Typography } from '@mui/material';
+import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 
-// const DefaultChannels = (props) => {
-//   const { channel, currentChannelId, handleSelectChannel } = props;
+const DefaultChannels = ({ channel, currentChannelId, handleSelectChannel }) => (
+  <ListItemButton
+    key={channel.id}
+    onClick={() => handleSelectChannel(channel.id)}
+    selected={currentChannelId === channel.id}
+    sx={{ flexWrap: 'wrap' }}
+  >
+    <ListItemIcon sx={{ minWidth: '30px' }}>
+      <BookmarkBorderIcon color="error" />
+    </ListItemIcon>
+    <ListItemText>
+      <Typography noWrap>{channel.name}</Typography>
+    </ListItemText>
+  </ListItemButton>
+);
 
-//   return (
-//     <li key={channel.id} className="nav-item w-100">
-//       <Button
-//         onClick={() => handleSelectChannel(channel.id)}
-//         type="button"
-//         className="w-100 rounded-0 text-start btn"
-//         variant={currentChannelId === channel.id ? 'secondary' : null}
-//       >
-//         <span className="me-1">#</span>
-//         {channel.name}
-//       </Button>
-//     </li>
-//   );
-// };
-
-// export default DefaultChannels;
+export default DefaultChannels;
