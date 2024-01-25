@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import { Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField, IconButton } from '@mui/material';
@@ -16,6 +16,17 @@ const AddModal = () => {
   const api = useSocket();
   const { t } = useTranslation();
   const { username } = useAuth();
+  const input = useRef(null);
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      if (input.current) {
+        input.current.focus();
+      }
+    }, 0);
+
+    return () => clearTimeout(timeoutId);
+  }, []);
 
   const modalIsOpen = useSelector((state) => state.modal.modalIsOpen);
   const channelNames = useSelector(selectChannelNames);
@@ -75,7 +86,6 @@ const AddModal = () => {
       </IconButton>
       <DialogContent>
         <TextField
-          autoFocus
           required
           margin="dense"
           id="name"
@@ -88,6 +98,7 @@ const AddModal = () => {
           onChange={formik.handleChange}
           error={!!formik.errors.name}
           helperText={formik.errors.name}
+          inputRef={input}
         />
       </DialogContent>
       <DialogActions>

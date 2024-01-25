@@ -1,15 +1,21 @@
-import React, { useState } from 'react';
-import { AppBar, Box, Button, Menu, MenuItem, Typography } from '@mui/material';
+import React, { useState, useContext } from 'react';
+import { AppBar, Box, Button, IconButton, Menu, MenuItem, Typography } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import LanguageIcon from '@mui/icons-material/Language';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import routes from '../router/paths';
 import useAuth from '../hooks/useAuth';
+import { ColorModeContext } from '../contexts';
 
 const Navbar = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const auth = useAuth();
   const { t, i18n } = useTranslation();
+  const theme = useTheme();
+  const colorMode = useContext(ColorModeContext);
 
   const handleAuthButton = () => {
     auth.logOut();
@@ -36,7 +42,7 @@ const Navbar = () => {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        padding: '15px 20px',
+        padding: '15px 30px',
       }}
     >
       <Typography
@@ -44,23 +50,23 @@ const Navbar = () => {
         component={Link}
         to={routes.mainPath()}
         sx={{
-          color: 'inherit',
           textDecoration: 'none',
         }}
       >
         {t('Navbar.navBarBrand')}
       </Typography>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-        {/* <ThemeButton /> */}
-        <MenuItem>
+        <IconButton onClick={colorMode.toggleColorMode}>
+          {theme.palette.mode === 'light' ? <Brightness4Icon /> : <Brightness7Icon />}
+        </IconButton>
+        <IconButton onClick={handleClick}>
           <LanguageIcon
             id="basic-button"
             aria-controls={anchorEl ? 'basic-menu' : undefined}
             aria-haspopup="true"
             aria-expanded={anchorEl ? 'true' : undefined}
-            onClick={handleClick}
           />
-        </MenuItem>
+        </IconButton>
         <Menu
           id="basic-menu"
           anchorEl={anchorEl}
@@ -78,7 +84,11 @@ const Navbar = () => {
           </MenuItem>
         </Menu>
         {auth.loggedIn && (
-          <Button onClick={handleAuthButton} variant="outlined" color="inherit">
+          <Button
+            onClick={handleAuthButton}
+            variant="outlined"
+            sx={{ ml: '10px', color: '#3bc1ae', background: 'none' }}
+          >
             {t('Navbar.logOut')}
           </Button>
         )}

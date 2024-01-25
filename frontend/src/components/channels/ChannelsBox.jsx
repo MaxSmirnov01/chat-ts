@@ -3,12 +3,12 @@ import { Typography, IconButton, Tooltip, List, Divider, Paper } from '@mui/mate
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { setCurrentChannel } from '../slices/channelsSlice';
-import { showModal } from '../slices/modalSlice';
+import { setCurrentChannel } from '../../slices/channelsSlice';
+import { showModal } from '../../slices/modalSlice';
 import DefaultChannel from './DefaultChannel';
 import NewChannel from './NewChannel';
 
-const Channels = () => {
+const ChannelsBox = () => {
   const dispatch = useDispatch();
   const channels = useSelector((state) => state.channels.channels);
   const currentChannelId = useSelector((state) => state.channels.currentChannelId);
@@ -77,4 +77,4 @@ const Channels = () => {
   );
 };
 
-export default Channels;
+export default ChannelsBox;

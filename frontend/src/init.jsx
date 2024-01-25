@@ -22,25 +22,10 @@ const init = async () => {
   });
 
   const api = {
-    sendMessage: (...arg) =>
-      socket.emit('newMessage', ...arg, (response) => {
-        console.log(response.status, 'message added');
-      }),
-    addChannel: (...arg) =>
-      socket.emit('newChannel', ...arg, (response) => {
-        const { status } = response;
-        console.log(status, 'channel added');
-      }),
-
-    removeChannel: (...arg) =>
-      socket.emit('removeChannel', ...arg, (response) => {
-        console.log(response.status, 'channel removed');
-      }),
-
-    renameChannel: (...arg) =>
-      socket.emit('renameChannel', ...arg, (response) => {
-        console.log(response.status, 'channel renamed');
-      }),
+    sendMessage: (...arg) => socket.emit('newMessage', ...arg),
+    addChannel: (...arg) => socket.emit('newChannel', ...arg),
+    removeChannel: (...arg) => socket.emit('removeChannel', ...arg),
+    renameChannel: (...arg) => socket.emit('renameChannel', ...arg),
   };
 
   return (

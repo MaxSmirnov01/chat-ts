@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ListItemIcon, ListItemButton, ListItemText, Menu, MenuItem, Box, Typography } from '@mui/material';
 import StarPurple500RoundedIcon from '@mui/icons-material/StarPurple500Rounded';
+import StarRateRoundedIcon from '@mui/icons-material/StarRateRounded';
 import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
 import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
@@ -27,7 +28,11 @@ const NewChannels = (props) => {
       selected={currentChannelId === channel.id}
     >
       <ListItemIcon sx={{ minWidth: '30px' }}>
-        <StarPurple500RoundedIcon color="warning" />
+        {currentChannelId === channel.id ? (
+          <StarRateRoundedIcon color="warning" />
+        ) : (
+          <StarPurple500RoundedIcon color="warning" />
+        )}
       </ListItemIcon>
       <ListItemText>
         <Typography noWrap>{channel.name}</Typography>

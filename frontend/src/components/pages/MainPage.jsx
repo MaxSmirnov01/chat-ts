@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Grid, Paper, Divider } from '@mui/material';
-import Channels from '../Channels.jsx';
-import Messages from '../Messages.jsx';
+import ChannelsBox from '../channels/ChannelsBox.jsx';
+import MessagesBox from '../messages/MessagesBox.jsx';
 import getModal from '../../modals.js';
 import getData from '../../api/getData.js';
 import useLocalStorage from '../../hooks/useLocalStorage.jsx';
@@ -66,7 +66,8 @@ const MainPage = () => {
       elevation={16}
       sx={{
         height: '100vh',
-        margin: '24px 34px',
+        my: '24px',
+        mx: '50px',
         overflow: 'hidden',
       }}
     >
@@ -82,7 +83,7 @@ const MainPage = () => {
             flexDirection: 'column',
           }}
         >
-          <Channels />
+          <ChannelsBox />
         </Grid>
         <Divider orientation="vertical" />
         <Grid
@@ -96,7 +97,7 @@ const MainPage = () => {
             flexDirection: 'column',
           }}
         >
-          <Messages />
+          <MessagesBox />
         </Grid>
       </Grid>
       {modalIsOpen && <Modal />}
