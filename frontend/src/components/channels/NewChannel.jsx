@@ -35,7 +35,7 @@ const NewChannels = (props) => {
         )}
       </ListItemIcon>
       <ListItemText>
-        <Typography noWrap>{channel.name}</Typography>
+        <Typography sx={{ wordWrap: 'break-word', wordBreak: 'break-word' }}>{channel.name}</Typography>
       </ListItemText>
       <Box>
         <KeyboardArrowDownRoundedIcon onClick={handleClick} sx={{ paddingTop: '5px' }} />
