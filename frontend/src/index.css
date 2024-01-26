@@ -10,15 +10,6 @@ body {
 }
 
 
-/* code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-} */
-
-/* @media (max-width: 900px) {
-
-}
-
 @media (max-width: 600px) {
   .MuiTypography-root {
     font-size: 1rem !important;
@@ -26,4 +17,4 @@ body {
   .MuiTypography-h4 {
     font-size: 1.5rem !important;
   }
-} */
+}

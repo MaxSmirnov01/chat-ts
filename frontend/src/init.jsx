@@ -4,6 +4,7 @@ import i18next from 'i18next';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
 import { Provider } from 'react-redux';
 import AuthProvider from './components/AuthProvider.jsx';
+import ThemeColorProvider from './components/ThemeColorProvider.jsx';
 import store from './slices/store.js';
 import App from './components/App';
 import resources from './locales/index.js';
@@ -34,7 +35,9 @@ const init = async () => {
         <SocketContext.Provider value={api}>
           <BrowserRouter>
             <AuthProvider>
-              <App />
+              <ThemeColorProvider>
+                <App />
+              </ThemeColorProvider>
             </AuthProvider>
           </BrowserRouter>
         </SocketContext.Provider>

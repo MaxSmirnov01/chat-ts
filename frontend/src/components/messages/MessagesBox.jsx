@@ -1,16 +1,24 @@
-import React, { useEffect, useRef } from 'react';
-import { Typography, List, Paper, ListItem, Divider } from '@mui/material';
+import React, { useEffect, useRef, useState } from 'react';
+import { Typography, List, Paper, ListItem, Divider, IconButton, Drawer } from '@mui/material';
+import ChatIcon from '@mui/icons-material/Chat';
 import { useTheme } from '@mui/material/styles';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import InputChat from './InputChat';
+import ChannelsBox from '../channels/ChannelsBox';
 import useAuth from '../../hooks/useAuth';
+import useWindowWidth from '../../hooks/useWindowWidth';
 
 const MessagesBox = () => {
   const chatRef = useRef(null);
   const { t } = useTranslation();
   const { username } = useAuth();
   const theme = useTheme();
+  const windowWidth = useWindowWidth();
+
+  const { sm } = theme.breakpoints.values;
+
+  const [channelsOpen, setChannelsOpen] = useState(false);
 
   const messages = useSelector((state) => state.messages.messages);
   const channelId = useSelector((state) => state.channels.currentChannelId);
@@ -26,10 +34,34 @@ const MessagesBox = () => {
     chatRef.current.scrollTop = chatRef.current.scrollHeight;
   }, [messagesFilteredById]);
 
+  const handleDrawerToggle = () => {
+    setChannelsOpen(!channelsOpen);
+  };
+
   return (
     <>
-      <Paper elevation={6} sx={{ padding: '13px 18px' }}>
+      <Paper
+        elevation={6}
+        sx={{
+          padding: '13px 18px',
+          display: windowWidth <= 600 ? 'flex' : 'block',
+          justifyContent: 'space-around',
+          alignItems: 'center',
+        }}
+      >
+        {windowWidth <= sm && (
+          <>
+            <IconButton onClick={handleDrawerToggle}>
+              <ChatIcon />
+            </IconButton>
+            <Drawer anchor="left" open={channelsOpen} onClose={handleDrawerToggle}>
+              <ChannelsBox />
+            </Drawer>
+            <Divider orientation="vertical" />
+          </>
+        )}
         <Typography variant="h6">{channelName && `# ${channelName.name}`}</Typography>
+        {windowWidth <= sm && <Divider orientation="vertical" />}
         <Typography component="span">{t('Messages.count', { count: messagesFilteredById.length })}</Typography>
       </Paper>
       <Divider />
@@ -48,7 +80,7 @@ const MessagesBox = () => {
                 backgroundColor: message.username === username ? 'primary.main' : 'secondary.main',
                 color: theme.palette.primary.contrastText,
                 borderRadius: '10px',
-                p: 2,
+                p: windowWidth > sm ? 2 : 1,
                 wordWrap: 'break-word',
                 wordBreak: 'break-word',
               }}

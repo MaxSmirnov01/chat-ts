@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import { Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
+import { useTheme } from '@mui/material/styles';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
@@ -15,6 +16,7 @@ const RenameModal = () => {
   const api = useSocket();
   const input = useRef(null);
   const { t } = useTranslation();
+  const theme = useTheme();
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -38,7 +40,7 @@ const RenameModal = () => {
   const schema = Yup.object().shape({
     name: Yup.string()
       .min(3, `${t('ValidationErrors.renameModal.name')}`)
-      .max(20, `${t('ValidationErrors.renameModal.name')}`)
+      .max(40, `${t('ValidationErrors.renameModal.name')}`)
       .notOneOf(channelNames, `${t('ValidationErrors.renameModal.unique')}`),
   });
 
@@ -55,6 +57,8 @@ const RenameModal = () => {
         handleClose();
         toast.success(`${t('PopUpAlerts.modal.renameChannel')}`, {
           icon: '👌',
+          position: 'bottom-right',
+          theme: theme.palette.mode === 'light' ? 'light' : 'dark',
         });
       } catch (error) {
         formik.setSubmitting(false);

@@ -10,6 +10,7 @@ import {
   IconButton,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
+import { useTheme } from '@mui/material/styles';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { hideModal } from '../../slices/modalSlice';
@@ -19,6 +20,7 @@ const RemoveModal = () => {
   const dispatch = useDispatch();
   const api = useSocket();
   const { t } = useTranslation();
+  const theme = useTheme();
 
   const { modalIsOpen, channelId } = useSelector((state) => state.modal);
 
@@ -29,6 +31,8 @@ const RemoveModal = () => {
     handleClose();
     toast.success(`${t('PopUpAlerts.modal.removeChannel')}`, {
       icon: '👌',
+      position: 'bottom-right',
+      theme: theme.palette.mode === 'light' ? 'light' : 'dark',
     });
   };
 

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import { Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
+import { useTheme } from '@mui/material/styles';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
@@ -17,6 +18,7 @@ const AddModal = () => {
   const { t } = useTranslation();
   const { username } = useAuth();
   const input = useRef(null);
+  const theme = useTheme();
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -36,7 +38,7 @@ const AddModal = () => {
   const schema = Yup.object().shape({
     name: Yup.string()
       .min(3, `${t('ValidationErrors.addModal.name')}`)
-      .max(20, `${t('ValidationErrors.addModal.name')}`)
+      .max(40, `${t('ValidationErrors.addModal.name')}`)
       .notOneOf(channelNames, `${t('ValidationErrors.addModal.unique')}`),
   });
 
@@ -53,6 +55,8 @@ const AddModal = () => {
         handleClose();
         toast.success(`${t('PopUpAlerts.modal.addChannel')}`, {
           icon: '👌',
+          position: 'bottom-right',
+          theme: theme.palette.mode === 'light' ? 'light' : 'dark',
         });
       } catch (error) {
         formik.setSubmitting(false);

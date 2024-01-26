@@ -87,7 +87,7 @@ const Navbar = () => {
           <Button
             onClick={handleAuthButton}
             variant="outlined"
-            sx={{ ml: '10px', color: '#3bc1ae', background: 'none' }}
+            sx={{ ml: '10px', color: 'rgb(98, 205, 190)', background: 'none' }}
           >
             {t('Navbar.logOut')}
           </Button>

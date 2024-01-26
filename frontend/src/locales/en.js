@@ -71,11 +71,11 @@ const en = {
         error: 'Invalid username or password',
       },
       addModal: {
-        name: 'From 3 to 20 characters',
+        name: 'From 3 to 40 characters',
         unique: 'Must be unique',
       },
       renameModal: {
-        name: 'From 3 to 20 characters',
+        name: 'From 3 to 40 characters',
         unique: 'Must be unique',
       },
     },

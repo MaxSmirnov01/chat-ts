@@ -1,12 +1,14 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Grid, Paper, Divider } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import ChannelsBox from '../channels/ChannelsBox.jsx';
 import MessagesBox from '../messages/MessagesBox.jsx';
 import getModal from '../../modals.js';
 import getData from '../../api/getData.js';
 import useLocalStorage from '../../hooks/useLocalStorage.jsx';
 import useAuth from '../../hooks/useAuth.jsx';
+import useWindowWidth from '../../hooks/useWindowWidth';
 import socket from '../../socket.js';
 import {
   addChannel,
@@ -21,6 +23,11 @@ const MainPage = () => {
   const dispatch = useDispatch();
   const { token } = JSON.parse(useLocalStorage('getItem'));
   const { username, logOut } = useAuth();
+  const windowWidth = useWindowWidth();
+  const theme = useTheme();
+
+  const { sm } = theme.breakpoints.values;
+
   const currentChannelId = useSelector((state) => state.channels.currentChannelId);
   const { type, modalIsOpen } = useSelector((state) => state.modal);
   const Modal = getModal(type);
@@ -63,36 +70,38 @@ const MainPage = () => {
 
   return (
     <Paper
+      component="main"
       elevation={16}
       sx={{
         height: '100vh',
-        my: '24px',
-        mx: '50px',
+        my: windowWidth > 700 ? '24px' : '15px',
+        mx: windowWidth > 700 ? '50px' : 0,
         overflow: 'hidden',
       }}
     >
       <Grid container sx={{ height: '100%', flexWrap: 'nowrap' }}>
+        {windowWidth > sm && (
+          <>
+            <Grid
+              item
+              sm={3}
+              sx={{
+                height: '100%',
+                display: 'flex',
+                flexDirection: 'column',
+              }}
+            >
+              <ChannelsBox />
+            </Grid>
+            <Divider orientation="vertical" />
+          </>
+        )}
         <Grid
           item
-          xs={2}
-          sm={3}
-          md={2}
-          sx={{
-            height: '100%',
-            display: 'flex',
-            flexDirection: 'column',
-          }}
-        >
-          <ChannelsBox />
-        </Grid>
-        <Divider orientation="vertical" />
-        <Grid
-          item
-          xs={10}
           sm={9}
-          md={10}
           sx={{
             height: '100%',
+            width: '100%',
             display: 'flex',
             flexDirection: 'column',
           }}

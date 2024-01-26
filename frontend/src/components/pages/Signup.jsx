@@ -1,7 +1,8 @@
 import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Box, Typography, Container, TextField, Button } from '@mui/material';
+import { Box, Typography, Container, TextField, Button, Paper } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import { toast } from 'react-toastify';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -18,6 +19,7 @@ const Signup = () => {
   const auth = useAuth();
   const { t } = useTranslation();
   const setItem = useLocalStorage('setItem');
+  const theme = useTheme();
 
   const schema = Yup.object().shape({
     username: Yup.string()
@@ -59,6 +61,8 @@ const Signup = () => {
         }
         toast.error(`${t('PopUpAlerts.signUp')}`, {
           icon: '🆘',
+          position: 'bottom-right',
+          theme: theme.palette.mode === 'light' ? 'light' : 'dark',
         });
         throw error;
       }
@@ -66,20 +70,16 @@ const Signup = () => {
   });
 
   return (
-    <Box sx={{ height: '100vh' }}>
-      <Box component="section" sx={{ display: 'flex', justifyContent: 'center', padding: '50px 0' }}>
-        <Container
-          maxWidth="sm"
+    <Box sx={{ height: '100vh', display: 'flex', alignItems: 'center' }}>
+      <Container maxWidth="sm">
+        <Paper
+          elevation={12}
           component="form"
           onSubmit={formik.handleSubmit}
           sx={{
             display: 'flex',
             flexDirection: 'column',
-            border: '1px solid #ccc',
-            boxShadow: '0 0.5rem 1.5rem rgba(0,0,0,0.2)',
-            borderRadius: '5px',
             padding: '20px',
-            margin: '30px',
           }}
         >
           <Typography variant="h5" component="div" sx={{ paddingBottom: '10px' }}>
@@ -141,8 +141,8 @@ const Signup = () => {
           <Button type="submit" aria-label={t('Signup.buttonSignUp')} variant="contained">
             {t('Signup.buttonSignUp')}
           </Button>
-        </Container>
-      </Box>
+        </Paper>
+      </Container>
     </Box>
   );
 };

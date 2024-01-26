@@ -2,7 +2,8 @@ import React, { useState, useRef } from 'react';
 import { useFormik } from 'formik';
 import { useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Box, Typography, Container, TextField, Button } from '@mui/material';
+import { Box, Typography, TextField, Button, Paper, Container } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
 import axios from 'axios';
@@ -23,6 +24,7 @@ const AuthorizationForm = () => {
   const { t } = useTranslation();
   const setItem = useLocalStorage('setItem');
   const input = useRef(null);
+  const theme = useTheme();
 
   const formik = useFormik({
     initialValues: {
@@ -48,6 +50,8 @@ const AuthorizationForm = () => {
         }
         toast.error(`${t('PopUpAlerts.authorizationForm')}`, {
           icon: '🆘',
+          position: 'bottom-right',
+          theme: theme.palette.mode === 'light' ? 'light' : 'dark',
         });
         throw error;
       }
@@ -55,20 +59,16 @@ const AuthorizationForm = () => {
   });
 
   return (
-    <Box sx={{ height: '100vh' }}>
-      <Box component="section" sx={{ display: 'flex', justifyContent: 'center', padding: '50px 0' }}>
-        <Container
-          maxWidth="sm"
+    <Box sx={{ height: '100vh', display: 'flex', alignItems: 'center' }}>
+      <Container maxWidth="sm">
+        <Paper
+          elevation={12}
           component="form"
           onSubmit={formik.handleSubmit}
           sx={{
             display: 'flex',
             flexDirection: 'column',
-            border: '1px solid #ccc',
-            boxShadow: '0 0.5rem 1.5rem rgba(0,0,0,0.2)',
-            borderRadius: '5px',
             padding: '20px',
-            margin: '30px',
           }}
         >
           <Typography variant="h5" component="div" sx={{ paddingBottom: '10px' }}>
@@ -112,8 +112,8 @@ const AuthorizationForm = () => {
             <span>{t('AuthorizationForm.noAccount')}</span>
             <Link to={paths.signupPath()}>{t('AuthorizationForm.signUp')}</Link>
           </Box>
-        </Container>
-      </Box>
+        </Paper>
+      </Container>
     </Box>
   );
 };
