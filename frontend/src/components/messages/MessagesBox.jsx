@@ -43,10 +43,11 @@ const MessagesBox = () => {
       <Paper
         elevation={6}
         sx={{
-          padding: '13px 18px',
-          display: windowWidth <= 600 ? 'flex' : 'block',
+          padding: '13px 15px',
+          display: windowWidth <= sm ? 'flex' : 'block',
           justifyContent: 'space-around',
           alignItems: 'center',
+          gap: '15px',
         }}
       >
         {windowWidth <= sm && (
@@ -54,13 +55,20 @@ const MessagesBox = () => {
             <IconButton onClick={handleDrawerToggle}>
               <ChatIcon />
             </IconButton>
-            <Drawer anchor="left" open={channelsOpen} onClose={handleDrawerToggle}>
-              <ChannelsBox />
+            <Drawer
+              anchor="left"
+              open={channelsOpen}
+              onClose={handleDrawerToggle}
+              PaperProps={{ sx: { width: '50%' } }}
+            >
+              <ChannelsBox handleDrawerToggle={handleDrawerToggle} channelsOpen={channelsOpen} />
             </Drawer>
             <Divider orientation="vertical" />
           </>
         )}
-        <Typography variant="h6">{channelName && `# ${channelName.name}`}</Typography>
+        <Typography variant="h6" noWrap>
+          {channelName && `# ${channelName.name}`}
+        </Typography>
         {windowWidth <= sm && <Divider orientation="vertical" />}
         <Typography component="span">{t('Messages.count', { count: messagesFilteredById.length })}</Typography>
       </Paper>

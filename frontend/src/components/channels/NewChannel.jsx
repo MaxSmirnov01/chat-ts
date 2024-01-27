@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next';
 
 const NewChannels = (props) => {
   const { channel, currentChannelId, handleSelectChannel, handleRemoveChannel, handleRenameChannel } = props;
+
   const { t } = useTranslation();
 
   const [anchorEl, setAnchorEl] = useState(null);

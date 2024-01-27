@@ -8,7 +8,7 @@ import { showModal } from '../../slices/modalSlice';
 import DefaultChannel from './DefaultChannel';
 import NewChannel from './NewChannel';
 
-const ChannelsBox = () => {
+const ChannelsBox = ({ handleDrawerToggle }) => {
   const dispatch = useDispatch();
   const channels = useSelector((state) => state.channels.channels);
   const currentChannelId = useSelector((state) => state.channels.currentChannelId);
@@ -58,6 +58,7 @@ const ChannelsBox = () => {
                 channel={channel}
                 currentChannelId={currentChannelId}
                 handleSelectChannel={handleSelectChannel}
+                handleDrawerToggle={handleDrawerToggle}
               />
             );
           }
@@ -69,6 +70,7 @@ const ChannelsBox = () => {
               handleSelectChannel={handleSelectChannel}
               handleRemoveChannel={handleRemoveChannel}
               handleRenameChannel={handleRenameChannel}
+              handleDrawerToggle={handleDrawerToggle}
             />
           );
         })}
